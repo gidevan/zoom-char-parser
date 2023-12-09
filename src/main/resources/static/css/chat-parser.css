@@ -1,0 +1,13 @@
+.errors {
+    color: red;
+}
+.parser-button {
+    height: 60px;
+    font-size:20px;
+}
+body {
+    font-size: 20px;
+}
+input {
+    font-size: 20px;
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Google Spreadsheet</title>
+    <script src="scripts/chat-parser.js"></script>
+    <link rel="stylesheet" href="css/chat-parser.css" />
+</head>
+
+<body>
+    <div class="errors" id="errors">
+
+    </div>
+    <div>
+        <label>Загрузить файл</label>
+        <input type="file" id="filePath" class="file-path"  maxlength="200"/>
+        <br/>
+        <label>Папка с результатом</label>
+        <input type="text" id="outputFolder" class="output-path" value="" maxlength="200"/>
+        <br/>
+        <input type="button" class="parser-button" value="Обработать файл" onclick="parseChat()"/>
+    </div>
+    <div id="resultData">
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,9 @@
+spring:
+  http:
+    multipart:
+      enabled: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 128MB
+      max-request-size: 128MB
