@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.vsanyc.sandbox</groupId>
-    <artifactId>spring-boot-transaction</artifactId>
+    <artifactId>chat-parser</artifactId>
     <version>0.1</version>
 
     <packaging>jar</packaging>
@@ -44,5 +44,18 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>org.vsanyc.chat.parser.ChatParserMain</mainClass>
+                    <layout>JAR</layout>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 
