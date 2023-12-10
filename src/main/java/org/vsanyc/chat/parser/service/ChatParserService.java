@@ -1,9 +1,11 @@
 package org.vsanyc.chat.parser.service;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 import org.vsanyc.chat.parser.domain.ParseDto;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -67,6 +69,8 @@ public class ChatParserService {
         var outputFolder = Path.of(parseDto.getOutputFolder());
         if (!Files.exists(outputFolder)) {
             outputFolder = Files.createDirectories(Paths.get(parseDto.getOutputFolder()));
+        } else {
+            FileUtils.cleanDirectory(new File(parseDto.getOutputFolder()));
         }
         createFileByUser(parseDto.getOutputFolder(), userMessages);
     }
