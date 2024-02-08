@@ -16,9 +16,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,11 +25,15 @@ import java.util.stream.Collectors;
 @Service
 public class ChatParserService {
 
-    private static final String AUTHOR_PATTERN = "^\\d{2}.\\d{2}.\\d{2} From.*";
+    private static final String AUTHOR_PATTERN_EN = "^\\d{2}.\\d{2}.\\d{2} From.*";
+    private static final String AUTHOR_PATTERN_RU = "^\\d{2}.\\d{2}.\\d{2} От.*";
     private static final String DATE_TIME_FORMAT = "yyyy_MM_dd_HH_mm_ss";
 
-    private static final String FROM = "From";
-    private static final String TO = "To";
+    private static final String FROM_EN = "From";
+    private static final String TO_EN = "To";
+
+    private static final String FROM_RU = "От";
+    private static final String TO_RU = "кому";
 
     public Map<String, List<String>> parseChat(ParseDto parseDto) throws IOException {
         var is = parseDto.getMultipartFile().getInputStream();
@@ -47,10 +48,10 @@ public class ChatParserService {
         var result = new HashMap<String, List<String>>();
         var author = "";
         for(var line: lines) {
-            if (line.matches(AUTHOR_PATTERN)) {
-                var startIndex = line.indexOf(FROM) + FROM.length();
-                var endIndex = line.indexOf(TO);
-                author = line.substring(startIndex, endIndex).trim();
+            if (line.matches(AUTHOR_PATTERN_EN)) {
+                author = parseAuthor(line, FROM_EN, TO_EN);
+            } else if (line.matches(AUTHOR_PATTERN_RU)) {
+                author = parseAuthor(line, FROM_RU, TO_RU);
             } else {
                 var message = line.trim();
                 if (result.containsKey(author)) {
@@ -63,6 +64,12 @@ public class ChatParserService {
             }
         }
         return result;
+    }
+
+    private String parseAuthor(String line, String from, String to) {
+        var startIndex = line.indexOf(from) + from.length();
+        var endIndex = line.indexOf(to);
+        return line.substring(startIndex, endIndex).trim();
     }
 
     private void saveChatByUser(ParseDto parseDto, Map<String, List<String>> userMessages) throws IOException{

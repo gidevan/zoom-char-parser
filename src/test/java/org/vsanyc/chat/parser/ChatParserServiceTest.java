@@ -6,10 +6,17 @@ import org.vsanyc.chat.parser.service.ChatParserService;
 
 public class ChatParserServiceTest {
 
-    private ChatParserService chatParserService = new ChatParserService();
+    private final ChatParserService chatParserService = new ChatParserService();
     @Test
-    public void testParseChat() {
-        var chatInputStream = this.getClass().getClassLoader().getResourceAsStream("meeting_saved_chat.txt");
+    public void testParseChatEn() {
+        var chatInputStream = this.getClass().getClassLoader().getResourceAsStream("meeting_saved_chat_en_delimeter.txt");
+        var result = chatParserService.parseChat(chatInputStream);
+        Assertions.assertFalse(result.isEmpty());
+    }
+
+    @Test
+    public void testParseChatRu() {
+        var chatInputStream = this.getClass().getClassLoader().getResourceAsStream("meeting_saved_chat_ru_delimeter.txt");
         var result = chatParserService.parseChat(chatInputStream);
         Assertions.assertFalse(result.isEmpty());
     }
